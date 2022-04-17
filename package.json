@@ -1,0 +1,17 @@
+{
+  "name": "subgraph-name",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph codegen && graph build",
+    "auth": "graph auth --product=hosted-service <your-graph-access-key>",
+    "deploy": "graph codegen && graph deploy <github-account/subgraph-name>",
+    "create-local": "graph create --node http://localhost:8020/ <github-account/subgraph-name>",
+    "remove-local": "graph remove --node http://localhost:8020/ <github-account/subgraph-name>",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 <github-account/subgraph-name>"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.26.0",
+    "@graphprotocol/graph-ts": "^0.24.1"
+  }
+}

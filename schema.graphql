@@ -1,0 +1,179 @@
+type _Schema_
+  @fulltext(
+    name: "nftSearch"
+    language: en
+    algorithm: rank
+    include: [{ entity: "Token", fields: [{ name: "ownerId" }, { name: "mintedBy" }, { name: "tokenId" }] }]
+  )
+
+type Account @entity {
+  id: ID!
+  signerId: String!
+  tokens: [Token!]! @derivedFrom(field: "owner")
+  sent: [Transfer!]! @derivedFrom(field: "from")
+  received: [Transfer!]! @derivedFrom(field: "to")
+
+  total_owned: BigInt!
+  total_minted: BigInt!
+  total_burned: BigInt!
+  total_transferred: BigInt!
+  last_updated: String!
+
+}
+
+type Token @entity {
+  id: ID!
+  standard: String!
+  version: String!
+  event: String!
+  owner: Account!
+  ownerId: String!
+  prev_owner: Account
+  prev_ownerId: String
+  tokenId: String
+  metadata: String
+  image: String
+
+  total_transfers: BigInt!
+  transfers: [Transfer!]! @derivedFrom(field: "nft")
+  mints: [Mint!]! @derivedFrom(field: "nft")
+
+  # mint
+  mintedBy: String!
+  original_minter: Contract!
+  minted_timestamp: String!
+  minted_blockHeight: String!
+  mintedByLinkdrop: String!
+
+  # burn
+  burned: String!
+  burnedBy: String
+
+  prev_sale_price: BigInt
+
+  # contract
+  contract: Contract!
+}
+
+
+type Contract @entity {
+  id: ID! # contract_id of nft collection
+  name: String!
+  symbol: String!
+  base_uri: String!
+  media_uri: String!
+  nfts: [Token!]! @derivedFrom(field: "contract")
+
+  copies: BigInt!
+  total_minted: BigInt!
+  total_burned: BigInt!
+  original_minters: [Mint!]! @derivedFrom(field: "contract")
+}
+
+
+type Transfer @entity {
+  id: ID!
+  standard: String!
+  version: String!
+  event: String!
+  methodName: String!
+  from: Account!
+  to: Account!
+  old_ownerId: String # from
+  new_ownerId: String # to
+  tokenId: String
+  authorizedId: String
+  nft: Token!
+  idx: String!
+  is_marketSale: String!
+  timestamp: String!
+  blockHash: String
+  blockHeight: String
+}
+
+
+type Mint @entity {
+  id: ID!
+  standard: String!
+  version: String!
+  event: String!
+  tokenId: String!
+  ownerId: String
+  owner: Account!
+
+  contract: Contract!
+
+  nft: Token!
+  idx: String!
+  timestamp: String!
+  blockHash: String
+  blockHeight: String
+}
+
+type Burn @entity {
+  id: ID!
+  standard: String!
+  version: String!
+  event: String!
+  tokenId: String!
+  ownerId: String
+  owner: Account!
+
+  contract: Contract!
+
+  nft: Token!
+  idx: String!
+  timestamp: String!
+  blockHash: String
+  blockHeight: String
+}
+
+# # expected event fields emitted from 'eventName' field
+# enum ActivityType @entity {
+#   nft_mint
+#   nft_burn
+#   nft_transfer
+#   nft_sale
+# }
+
+# type Activity @entity {
+#   id: ID!
+#   nft: Token!
+#   type: ActivityType!
+
+#   sender: Account!
+#   recepient: Account
+#   deposit: String
+
+#   tokenId: String
+
+#   # mint
+#   ownerId: String
+#   mintedWithLinkDrop: String
+
+#   # transfer
+#   old_ownerId: String
+#   new_ownerId: String
+#   # third-party contract interaction
+#   authorizedId: String
+
+#   # NEP format event info
+#   eventStandard: String
+#   eventVersion: String
+#   eventName: String
+
+#   # receipt info
+#   signerId: String
+#   predecessorId: String
+#   receiverId: String
+#   txHash: String!
+  
+#   timestamp: String!
+#   blockHeight: String!
+#   blockHash: String!
+# }
+
+
+
+
+
