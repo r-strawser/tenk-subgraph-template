@@ -1,4 +1,5 @@
 specVersion: 0.0.4
+repository: https://github.com/r-strawser/tenk-subgraph-template.git # repo where subgraph project is stored
 schema:
   file: ./schema.graphql
 features:
