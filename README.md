@@ -160,7 +160,13 @@ The Graph integration with NEAR allows us to log any on-chain information aggreg
 
 We use functionCall logging in the template, but I have found that there are much better methods of logging that offer for more dynamic event support and contract upgrades. This is due to the way developers include logs in their contracts and solved with best practice and formalized event support which is happening as I mention this!
 
-Function call logging is useful for some instances, such as fetching the result data from a called methodName. Other than that, ingesting receipts and writing mappings from outcomes logs is one of the best ways to write subgraphs. This allows the subgraph to directly search for specific events emitted from the outcome logs, rather than searching for hardcoded methods you anticipate to be called from the code. 
+Function call logging is useful for some instances, such as fetching the result data from a called methodName. Other than that, ingesting receipts and writing mappings from outcomes logs is one of the best ways to write subgraphs. This allows the subgraph to directly search for specific events emitted from the outcome logs, rather than searching for hardcoded methods you anticipate to be called from the code.
+	
+**Data Source Template Support Integration**
+
+Data source template support for NEAR subgraphs open a world of possibilities! One method we discussed was with a .wit file integration within the schema. This is future work and would love to dive more into. Another method that is being discussed is the Event Trigger which can be integrated by The Graph on finalization of the NEP format. 
+
+We use functionCall logging in the template, 
 
 FAQ
 
